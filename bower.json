@@ -4,9 +4,10 @@
   "homepage": "https://github.com/dpoetzsch/md-pickers",
   "authors": [
     "alenaksu",
-    "dpoetzsch"
+    "dpoetzsch",
+    "laguiz"
   ],
-  "description": "Material Design date/time pickers built with Angular Material and Moment.js",
+  "description": "Material Design date/time pickers built with Angular Material and Moment.js. This fork support String ISO date with `moment()`. Timezone if handled with `moment.tz.setDefault('...')` by user of this lib.",
   "main": [
     "dist/mdPickers.js",
     "dist/mdPickers.css"

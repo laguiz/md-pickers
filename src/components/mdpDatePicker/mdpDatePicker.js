@@ -121,6 +121,12 @@ module.provider("$mdpDatePicker", function() {
 
     this.$get = ["$mdDialog", "$mdpLocale", function($mdDialog, $mdpLocale) {
         var datePicker = function(currentDate, options) {
+
+            //If date exist and it's not a date then we first try to see if moment can do something about it
+            //Use case : We have a String formated as String ISO and it seems that angular.isDate(...) return false
+            if(currentDate !== null){
+                if (!angular.isDate(currentDate)) currentDate = moment(currentDate).toDate();
+            }
             if (!angular.isDate(currentDate)) currentDate = Date.now();
             if (!angular.isObject(options)) options = {};
 
@@ -421,7 +427,8 @@ module.directive("mdpDatePicker", ["$mdpDatePicker", "$timeout", "$mdpLocale", f
 
                 // update input element if model has changed
                 ngModel.$formatters.unshift(function(value) {
-                    var date = angular.isDate(value) && moment(value);
+                    //let moment figure out if it's a date (handle String ISO Dates)
+                    var date = moment(value);
                     if(date && date.isValid()) {
                         var strVal = date.format(scope.dateFormat);
                         updateInputElement(strVal);

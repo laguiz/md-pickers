@@ -1,3 +1,6 @@
+# Fork from dpoetzsch/md-pickers note
+This fork support String ISO date with `moment()`. Timezone if handled with `moment.tz.setDefault('...')`.
+
 # mdPickers
 Material Design date/time pickers built with Angular Material and Moment.js
 

@@ -209,6 +209,12 @@ module.provider("$mdpTimePicker", function() {
 
     this.$get = ["$mdDialog", "$mdpLocale", function($mdDialog, $mdpLocale) {
         var timePicker = function(time, options) {
+
+            //If date exist and it's not a date then we first try to see if moment can do something about it
+            //Use case : We have a String formated as String ISO and it seems that angular.isDate(...) return false
+            if(time !== null){
+                if (!angular.isDate(time)) time = moment(time).toDate();
+            }
             if(!angular.isDate(time)) time = Date.now();
             if (!angular.isObject(options)) options = {};
 
@@ -361,7 +367,8 @@ module.directive("mdpTimePicker", ["$mdpTimePicker", "$timeout", "$mdpLocale", f
 
             // update input element if model has changed
             ngModel.$formatters.unshift(function(value) {
-                var time = angular.isDate(value) && moment(value);
+                //let moment figure out if it's a date (handle String ISO Dates)
+                var time = moment(value);
                 if(time && time.isValid()) {
                     var strVal = time.format(scope.timeFormat);
                     updateInputElement(strVal);
